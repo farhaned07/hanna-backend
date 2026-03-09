@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Health Summary - Hanna</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #1E293B;
+            background: #fff;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #3B82F6;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .header-title {
+            font-size: 18pt;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .header-subtitle {
+            font-size: 10pt;
+            color: #64748B;
+            margin-top: 4px;
+        }
+
+        .header-meta {
+            text-align: right;
+            font-size: 9pt;
+            color: #64748B;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 11pt;
+            font-weight: 600;
+            color: #1E40AF;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-content {
+            padding: 10px 12px;
+            background: #F8FAFC;
+            border-radius: 6px;
+            border: 1px solid #E2E8F0;
+        }
+
+        /* Patient Snapshot Box */
+        .snapshot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .snapshot-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .snapshot-label {
+            font-size: 9pt;
+            color: #64748B;
+            font-weight: 500;
+        }
+
+        .snapshot-value {
+            font-size: 11pt;
+            font-weight: 600;
+            color: #0F172A;
+        }
+
+        /* Metric Highlight */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .metric-label {
+            color: #475569;
+        }
+
+        .metric-value {
+            font-weight: 600;
+        }
+
+        .metric-good {
+            color: #16A34A;
+        }
+
+        .metric-warning {
+            color: #D97706;
+        }
+
+        .metric-critical {
+            color: #DC2626;
+        }
+
+        .metric-neutral {
+            color: #0F172A;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+        }
+
+        .data-table th {
+            background: #E2E8F0;
+            padding: 6px 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .data-table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chart-label {
+            font-size: 9pt;
+            color: #64748B;
+            margin-top: 4px;
+        }
+
+        /* AI Summary Box */
+        .ai-summary {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-left: 4px solid #3B82F6;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .ai-summary-header {
+            font-size: 9pt;
+            font-weight: 600;
+            color: #1E40AF;
+            margin-bottom: 6px;
+        }
+
+        .ai-summary-content {
+            font-size: 10pt;
+            color: #1E293B;
+            font-style: italic;
+        }
+
+        /* Trend Badge */
+        .trend-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 9pt;
+            font-weight: 600;
+        }
+
+        .trend-improving {
+            background: #DCFCE7;
+            color: #166534;
+        }
+
+        .trend-stable {
+            background: #E0E7FF;
+            color: #3730A3;
+        }
+
+        .trend-worsening {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #E2E8F0;
+            font-size: 8pt;
+            color: #64748B;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .disclaimer {
+            margin-top: 10px;
+            padding: 8px;
+            background: #FEF3C7;
+            border: 1px solid #FCD34D;
+            border-radius: 4px;
+            font-size: 8pt;
+            color: #92400E;
+            text-align: center;
+        }
+
+        /* Two Column */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Tag List */
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #E2E8F0;
+            border-radius: 4px;
+            font-size: 9pt;
+            color: #475569;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="header-title">📋 รายงานสรุปสุขภาพผู้ป่วย</div>
+                <div class="header-subtitle">Patient Health Summary • Hanna AI Nurse</div>
+            </div>
+            <div class="header-meta">
+                <div>ช่วงการติดตาม: <strong>
+                        <%= timeRange.days %> วันล่าสุด
+                    </strong></div>
+                <div>
+                    <%= new Date(timeRange.startDate).toLocaleDateString('th-TH') %> - <%= new
+                            Date(timeRange.endDate).toLocaleDateString('th-TH') %>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. Patient Snapshot -->
+        <div class="section">
+            <div class="section-title">👤 1. ข้อมูลผู้ป่วย (Patient Snapshot)</div>
+            <div class="section-content">
+                <div class="snapshot-grid">
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">รหัสผู้ป่วย</span>
+                        <span class="snapshot-value">HN-<%= String(patient.id).padStart(8, '0' ) %></span>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">อายุ / เพศ</span>
+                        <span class="snapshot-value">
+                            <%= patient.age || 'N/A' %> ปี
+                        </span>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">โรคประจำตัว</span>
+                        <span class="snapshot-value">
+                            <%= patient.condition || 'N/A' %>
+                        </span>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">ชื่อ</span>
+                        <span class="snapshot-value">
+                            <%= patient.name || 'N/A' %>
+                        </span>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">สถานะ</span>
+                        <span class="snapshot-value">
+                            <%= patient.status || 'Active' %>
+                        </span>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">ลงทะเบียนตั้งแต่</span>
+                        <span class="snapshot-value">
+                            <%= new Date(patient.enrolledSince).toLocaleDateString('th-TH') %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <!-- 2. Engagement Overview -->
+            <div class="section">
+                <div class="section-title">💬 2. ภาพรวมการมีส่วนร่วม</div>
+                <div class="section-content">
+                    <div class="metric-row">
+                        <span class="metric-label">วันที่ตอบกลับ</span>
+                        <span
+                            class="metric-value <%= engagement.percentage >= 70 ? 'metric-good' : engagement.percentage >= 50 ? 'metric-warning' : 'metric-critical' %>">
+                            <%= engagement.daysResponded %> / <%= engagement.totalDays %> วัน (<%= engagement.percentage
+                                        %>%)
+                        </span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">ขาดการเช็คอิน</span>
+                        <span class="metric-value metric-neutral">
+                            <%= engagement.missedDays %> วัน
+                        </span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">การติดต่อผ่าน LINE</span>
+                        <span class="metric-value metric-good">ยืนยันแล้ว ✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Medication Adherence -->
+            <div class="section">
+                <div class="section-title">💊 3. การรับประทานยา</div>
+                <div class="section-content">
+                    <div class="metric-row">
+                        <span class="metric-label">อัตราการทานยาตรงเวลา</span>
+                        <% if (adherence.percentage !==null) { %>
+                            <span
+                                class="metric-value <%= adherence.percentage >= 80 ? 'metric-good' : adherence.percentage >= 60 ? 'metric-warning' : 'metric-critical' %>">
+                                <%= adherence.percentage %>%
+                            </span>
+                            <% } else { %>
+                                <span class="metric-value metric-neutral">ไม่มีข้อมูล</span>
+                                <% } %>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">ครั้งที่ทานยา</span>
+                        <span class="metric-value metric-neutral">
+                            <%= adherence.totalTaken %> / <%= adherence.totalExpected %>
+                        </span>
+                    </div>
+                    <% if (adherence.pattern) { %>
+                        <div style="margin-top: 8px; font-size: 9pt; color: #D97706;">
+                            ⚠️ <%= adherence.pattern %>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Symptom & Risk Signals -->
+        <div class="section">
+            <div class="section-title">⚠️ 4. อาการและสัญญาณความเสี่ยง</div>
+            <div class="section-content">
+                <div class="two-col">
+                    <div>
+                        <div class="metric-row">
+                            <span class="metric-label">อาการที่รายงาน</span>
+                            <span class="metric-value metric-neutral">
+                                <%= symptoms.total %> ครั้ง
+                            </span>
+                        </div>
+                        <% if (symptoms.list.length> 0) { %>
+                            <div class="tag-list" style="margin-top: 8px;">
+                                <% symptoms.list.slice(0, 5).forEach(s=> { %>
+                                    <span class="tag">
+                                        <%= s.name %> (<%= s.count %>)
+                                    </span>
+                                    <% }); %>
+                            </div>
+                            <% } else { %>
+                                <div style="font-size: 9pt; color: #64748B; margin-top: 4px;">ไม่มีอาการที่รายงาน</div>
+                                <% } %>
+                    </div>
+                    <div>
+                        <div class="metric-row">
+                            <span class="metric-label">แนวโน้ม</span>
+                            <span class="trend-badge trend-<%= vitals.trend %>">
+                                <%= vitals.trend==='improving' ? '↗ ดีขึ้น' : vitals.trend==='worsening' ? '↘ แย่ลง'
+                                    : '→ คงที่' %>
+                            </span>
+                        </div>
+                        <div class="metric-row" style="margin-top: 8px;">
+                            <span class="metric-label">การส่งต่อพยาบาล</span>
+                            <span
+                                class="metric-value <%= escalations.critical > 0 ? 'metric-critical' : 'metric-neutral' %>">
+                                <%= escalations.total %> ครั้ง <% if (escalations.critical> 0) { %>(วิกฤต <%=
+                                            escalations.critical %>)<% } %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Trend Visualization -->
+        <div class="section">
+            <div class="section-title">📊 5. กราฟแนวโน้ม</div>
+            <div class="section-content">
+                <div class="two-col">
+                    <div class="chart-container">
+                        <% if (charts.adherenceChart) { %>
+                            <img src="<%= charts.adherenceChart %>" alt="Adherence Trend">
+                            <div class="chart-label">อัตราการทานยา (%)</div>
+                            <% } else { %>
+                                <div style="padding: 20px; color: #64748B;">ไม่มีข้อมูลกราฟ</div>
+                                <% } %>
+                    </div>
+                    <div class="chart-container">
+                        <% if (charts.glucoseChart) { %>
+                            <img src="<%= charts.glucoseChart %>" alt="Glucose Trend">
+                            <div class="chart-label">ระดับน้ำตาลในเลือด (mg/dL)</div>
+                            <% } else { %>
+                                <div style="padding: 20px; color: #64748B;">ไม่มีข้อมูลน้ำตาล</div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Nurse Notes -->
+        <div class="section">
+            <div class="section-title">👩‍⚕️ 6. บันทึกพยาบาล</div>
+            <div class="section-content">
+                <% if (nurseActions.recentTasks.length> 0) { %>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>วันที่</th>
+                                <th>ประเภท</th>
+                                <th>รายละเอียด</th>
+                                <th>สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% nurseActions.recentTasks.forEach(task=> { %>
+                                <tr>
+                                    <td>
+                                        <%= new Date(task.created_at).toLocaleDateString('th-TH') %>
+                                    </td>
+                                    <td>
+                                        <%= task.task_type || 'General' %>
+                                    </td>
+                                    <td>
+                                        <%= task.reason || task.title || '-' %>
+                                    </td>
+                                    <td>
+                                        <%= task.resolved_at ? '✓ เสร็จสิ้น' : '⏳ รอดำเนินการ' %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                    <% } else { %>
+                        <div style="text-align: center; padding: 12px; color: #64748B;">
+                            ไม่มีการดำเนินการของพยาบาลในช่วงเวลานี้
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+
+        <!-- 7. AI Summary -->
+        <div class="section">
+            <div class="section-title">🤖 7. สรุปโดย AI</div>
+            <div class="ai-summary">
+                <div class="ai-summary-header">AI-Generated Summary (ตรวจสอบโดยทีมคลินิก)</div>
+                <div class="ai-summary-content">
+                    "<%= aiSummary || generateDefaultSummary(engagement, adherence, vitals, symptoms) %>"
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-row">
+                <span>สร้างเมื่อ: <%= new Date(generatedAt).toLocaleString('th-TH') %></span>
+                <span>Audit ID: <%= auditId %></span>
+            </div>
+            <div class="footer-row">
+                <span>Document ID: PDF-<%= new Date().getFullYear() %>-<%= String(Math.random()).slice(2, 8) %></span>
+                <span>Hanna AI Nurse Infrastructure</span>
+            </div>
+            <div class="disclaimer">
+                ⚠️ รายงานนี้จัดทำขึ้นเพื่อสนับสนุนการตัดสินใจทางคลินิก แต่ไม่ได้แทนที่การวินิจฉัยของแพทย์<br>
+                This summary supports clinical decision-making but does not replace clinician judgment.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateDefaultSummary(engagement, adherence, vitals, symptoms) {
+            let summary = '';
+
+            if (engagement.percentage >= 80) {
+                summary += 'ผู้ป่วยมีส่วนร่วมดีเยี่ยมในการเช็คอินสุขภาพประจำวัน ';
+            } else if (engagement.percentage >= 50) {
+                summary += 'ผู้ป่วยมีส่วนร่วมปานกลางในการเช็คอินสุขภาพ ';
+            } else {
+                summary += 'ผู้ป่วยมีส่วนร่วมในการเช็คอินค่อนข้างน้อย ควรติดตามเพิ่มเติม ';
+            }
+
+            if (adherence.percentage !== null) {
+                if (adherence.percentage >= 80) {
+                    summary += 'การรับประทานยาสม่ำเสมอ ';
+                } else {
+                    summary += 'การรับประทานยาต้องการการติดตามเพิ่มเติม ';
+                }
+            }
+
+            if (vitals.trend === 'improving') {
+                summary += 'แนวโน้มค่าสุขภาพดีขึ้น ';
+            } else if (vitals.trend === 'worsening') {
+                summary += 'แนวโน้มค่าสุขภาพต้องเฝ้าระวัง ';
+            }
+
+            if (symptoms.total === 0) {
+                summary += 'ไม่พบอาการผิดปกติที่รายงานในช่วงเวลานี้';
+            }
+
+            return summary || 'สรุปข้อมูลผู้ป่วยในช่วงเวลาที่กำหนด';
+        }
+    </script>
+</body>
+
+</html>

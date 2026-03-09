@@ -1,0 +1,12 @@
+# Nixpacks configuration for Hanna backend
+
+[phases.setup]
+nixPkgs = ["nodejs_18"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+# No build phase needed - frontend is deployed separately on Vercel
+
+[start]
+cmd = "npm start"
