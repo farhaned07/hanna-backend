@@ -1,5 +1,5 @@
 {
-  "name": "hanna-line-bot",
+  "name": "hanna-backend",
   "version": "1.0.0",
   "description": "LINE voice-first chronic care bot for Hanna AI Nurse",
   "main": "src/index.js",
@@ -7,10 +7,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "test": "node tests/critical-paths.test.js",
-    "build:all": "npm run build:landing && npm run build:scribe && npm run combine-builds",
-    "build:landing": "cd landing && npm install && npm run build",
-    "build:scribe": "cd scribe && npm install && npm run build",
-    "combine-builds": "node scripts/combine-builds.js"
+    "build": "echo 'No build required for backend'"
   },
   "keywords": [],
   "author": "",
