@@ -18,6 +18,9 @@ const app = express();
 const allowedOrigins = [
     'https://hanna.care',
     'https://www.hanna.care',
+    'https://app.hanna.care',
+    'https://nurse.hanna.care',
+    'https://line.hanna.care',
     'https://hanna-line-bot-production.up.railway.app',
     process.env.NODE_ENV === 'development' && 'http://localhost:3000',
     process.env.NODE_ENV === 'development' && 'http://localhost:5174',
@@ -137,6 +140,7 @@ app.use('/api/superadmin', express.json(), require('./routes/superadmin'));
 app.use('/api/patient', require('./routes/patient')); // PDPA Right-to-Erasure
 app.use('/api/scribe', express.json(), require('./routes/scribe')); // Scribe Clinical Documentation
 app.use('/api/followup', express.json(), require('./routes/followup')); // Follow-up Enrollment & Management
+app.use('/api/care-plans', express.json(), require('./routes/careplans')); // Care Plan Bridge
 
 // Serve Scribe PWA
 const scribeBuildPath = path.join(__dirname, '../scribe/dist');
