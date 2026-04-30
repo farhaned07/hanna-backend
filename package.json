@@ -1,7 +1,7 @@
 {
   "name": "hanna-backend",
   "version": "1.0.0",
-  "description": "LINE voice-first chronic care bot for Hanna AI Nurse",
+  "description": "Shared enterprise API for Hanna Care Intelligence: Scribe, care plans, follow-up, nurse queue, analytics, and reports.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -9,7 +9,14 @@
     "test": "node tests/critical-paths.test.js",
     "build": "echo 'No build required for backend'"
   },
-  "keywords": [],
+  "keywords": [
+    "hanna",
+    "care-intelligence",
+    "chronic-care",
+    "scribe",
+    "follow-up",
+    "nurse-dashboard"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
